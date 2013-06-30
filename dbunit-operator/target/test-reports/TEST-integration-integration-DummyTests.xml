@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="Mikes-MacBook-Pro.local" name="DummyTests" tests="1" time="0.218" timestamp="2013-06-30T21:37:14">
+  <properties />
+  <testcase classname="DummyTests" name="testDummySomething" time="0.206" />
+  <system-out><![CDATA[--Output from testDummySomething--
+[Project New Markets, Mac OS X 2010]
+[Omega, Apple, Saab]
+]]></system-out>
+  <system-err><![CDATA[--Output from testDummySomething--
+]]></system-err>
+</testsuite>

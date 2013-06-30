@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="Mikes-MacBook-Pro.local" name="MyTests" tests="3" time="0.119" timestamp="2013-06-30T21:37:14">
+  <properties />
+  <testcase classname="MyTests" name="testFirstRelation" time="0.052" />
+  <testcase classname="MyTests" name="testSecondRelation" time="0.029" />
+  <testcase classname="MyTests" name="testPrintData" time="0.034" />
+  <system-out><![CDATA[--Output from testFirstRelation--
+--Output from testSecondRelation--
+--Output from testPrintData--
+[Omega, Apple, Saab]
+[Project New Markets, Mac OS X 2010]
+]]></system-out>
+  <system-err><![CDATA[--Output from testFirstRelation--
+--Output from testSecondRelation--
+--Output from testPrintData--
+]]></system-err>
+</testsuite>

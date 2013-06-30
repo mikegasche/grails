@@ -1,0 +1,18 @@
+Testsuite: MyTests
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0,119 sec
+------------- Standard Output ---------------
+--Output from testFirstRelation--
+--Output from testSecondRelation--
+--Output from testPrintData--
+[Omega, Apple, Saab]
+[Project New Markets, Mac OS X 2010]
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+--Output from testFirstRelation--
+--Output from testSecondRelation--
+--Output from testPrintData--
+------------- ---------------- ---------------
+
+Testcase: testFirstRelation took 0,052 sec
+Testcase: testSecondRelation took 0,029 sec
+Testcase: testPrintData took 0,034 sec
