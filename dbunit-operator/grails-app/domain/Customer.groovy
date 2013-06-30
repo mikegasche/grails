@@ -1,10 +1,9 @@
 // Test entity
 class Customer {
-	
-	String name
-	
-	String toString() {
-		return "${name}"
-	}
 
+	String name
+
+	String toString() {
+		name
+	}
 }
