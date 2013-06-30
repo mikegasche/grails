@@ -14,40 +14,36 @@
  *   limitations under the License.
  */
 
-
-
-package ch.gstream.grails.plugins.dbunitoperator;
-
-
-import java.io.File
-import java.io.InputStream
-import java.io.FileInputStream
-import java.sql.SQLException
-import java.util.List;
-
-import javax.servlet.ServletContext
+package ch.gstream.grails.plugins.dbunitoperator
 
 import groovy.sql.Sql
 
+import java.sql.SQLException
+
+import javax.naming.InitialContext
+import javax.servlet.ServletContext
+import javax.sql.DataSource
+
 import org.apache.commons.logging.LogFactory
+import org.codehaus.groovy.grails.web.context.ServletContextHolder
 import org.dbunit.database.DatabaseConfig
 import org.dbunit.database.DatabaseConnection
-import org.dbunit.dataset.AbstractDataSet
+import org.dbunit.database.DatabaseSequenceFilter
+import org.dbunit.dataset.FilteredDataSet
+import org.dbunit.dataset.datatype.DefaultDataTypeFactory
 import org.dbunit.dataset.xml.FlatXmlDataSet
 import org.dbunit.dataset.xml.FlatXmlProducer
 import org.dbunit.dataset.xml.XmlDataSet
-import org.dbunit.ext.mysql.MySqlDataTypeFactory
-import org.dbunit.operation.DatabaseOperation
+import org.dbunit.ext.h2.H2DataTypeFactory
+import org.dbunit.ext.hsqldb.HsqldbDataTypeFactory
 import org.dbunit.ext.mssql.InsertIdentityOperation
-import org.xml.sax.InputSource
-import org.codehaus.groovy.grails.commons.spring.GrailsApplicationContext
-import org.codehaus.groovy.grails.support.MockApplicationContext
-import org.codehaus.groovy.grails.web.context.ServletContextHolder
+import org.dbunit.ext.mysql.MySqlDataTypeFactory
+import org.dbunit.ext.oracle.OracleDataTypeFactory
+import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory
+import org.dbunit.operation.DatabaseOperation
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.context.support.WebApplicationContextUtils
-import org.dbunit.database.DatabaseSequenceFilter
-import org.dbunit.dataset.FilteredDataSet
-import javax.sql.DataSource
+import org.xml.sax.InputSource
 
 /**
  * <p>
@@ -70,22 +66,21 @@ import javax.sql.DataSource
  *
  * @author Michael Gasche
  */
-public class DbUnitOperatorImpl {
+class DbUnitOperatorImpl {
 
-    def log = LogFactory.getLog(DbUnitOperatorImpl.class);
+    def log = LogFactory.getLog(getClass())
 
-    private Configuration config = null
-    private WebApplicationContext context = null
+    private Configuration config
+    private WebApplicationContext context
 
-    private String initialData = null
-    private String operationType = null
-    private String dbunitXmlType = null
+    private String initialData
+    private String operationType
+    private String dbunitXmlType
 
     /**
      * Default constructor.
      */
-    public DbUnitOperatorImpl() {
-
+    DbUnitOperatorImpl() {
         this(new Configuration())
     }
 
@@ -96,7 +91,7 @@ public class DbUnitOperatorImpl {
      * @param config
      *            data source config object
      */
-    public DbUnitOperatorImpl(Configuration config) {
+    DbUnitOperatorImpl(Configuration config) {
 
         this.config = config
 
@@ -112,8 +107,7 @@ public class DbUnitOperatorImpl {
      * @param context
      *            web application context
      */
-    public DbUnitOperatorImpl(Configuration config,
-                              WebApplicationContext context) {
+    DbUnitOperatorImpl(Configuration config, WebApplicationContext context) {
 
         this.config = config
 
@@ -125,20 +119,15 @@ public class DbUnitOperatorImpl {
     /**
      * Load appropriate data set from configured (DataSource.groovy) data file
      * and execute DBUnit with configured operation (DataSource.groovy).
-     *
-     * @throws Exception
      */
-    public def create() throws Exception {
-
+    void create() {
         this.innerOperate()
     }
 
     /**
      * Execute given operation with configured data file (DataSource.groovy).
-     *
-     * @throws Exception
      */
-    public def operate(String operationType, String filePath) throws Exception {
+    void operate(String operationType, String filePath) {
 
         this.operationType = operationType
         this.initialData = filePath
@@ -149,7 +138,7 @@ public class DbUnitOperatorImpl {
     /**
      * Initialize configuration from DataSource.groovy.
      */
-    private def init() {
+    private void init() {
 
         this.initialData = config.getInitialData()
         this.operationType = config.getInitialOperation()
@@ -157,20 +146,20 @@ public class DbUnitOperatorImpl {
 
         if (initialData == null)
             throw new IllegalArgumentException(
-                    "No 'initialData' property found within environment 'dataSource' section (DataSource.groovy)! Define here the DBUnit XML file.");
+                    "No 'initialData' property found within environment 'dataSource' section (DataSource.groovy)! Define here the DBUnit XML file.")
 
         if (operationType == null)
             throw new IllegalArgumentException(
-                    "No 'operationType' property found within environment 'dataSource' section (DataSource.groovy)! Define here the DBUnit method.");
+                    "No 'operationType' property found within environment 'dataSource' section (DataSource.groovy)! Define here the DBUnit method.")
 
         if (dbunitXmlType == null) {
             log.warn "No 'dbunitXmlType' property found (DataSource.groovy); Using 'flat' XML dbunit file."
-            dbunitXmlType = 'flat';
+            dbunitXmlType = 'flat'
         }
 
         if (context == null) {
 
-            ServletContext sctx = ServletContextHolder.getServletContext();
+            ServletContext sctx = ServletContextHolder.getServletContext()
             if (sctx != null)
                 context = WebApplicationContextUtils.getWebApplicationContext(sctx)
         }
@@ -182,26 +171,25 @@ public class DbUnitOperatorImpl {
      * Create database connection.
      *
      * @return database connection
-     * @throws Exception
      */
-    private def DatabaseConnection createDatabaseConnection() throws Exception {
+    private DatabaseConnection createDatabaseConnection() {
 
-        DatabaseConnection conn = null
+        DatabaseConnection conn
 
         try {
 
-            Sql sql = null
+            Sql sql
 
             //we use our configuration based on a jndi configuration
             if (config.isJndiBased()) {
                 log.info "this datasource is jndi based..."
 
                 try {
-                    def ctx = new javax.naming.InitialContext()
+                    def ctx = new InitialContext()
 
                     DataSource con = ctx.lookup(config.getJndiName())
 
-                    assert con != null, "sorry there was no datasource returned for the jndiName: ${config.getJndiName()}"
+                    assert con, "sorry there was no datasource returned for the jndiName: ${config.getJndiName()}"
                     sql = Sql.newInstance(con.connection)
                 }
                 catch (Throwable e) {
@@ -213,28 +201,28 @@ public class DbUnitOperatorImpl {
             //the explicit configuration in the configuration
             else {
                 log.info "this datasource is explicit declared..."
-                sql = Sql.newInstance(config.getUrl(), config.getUsername(), config.getPassword(), config.getDriver());
+                sql = Sql.newInstance(config.getUrl(), config.getUsername(), config.getPassword(), config.getDriver())
             }
 
-            assert sql != null, "the sql instance should never be null!"
+            assert sql, "the sql instance should never be null!"
 
-            conn = new DatabaseConnection(sql.getConnection());
+            conn = new DatabaseConnection(sql.getConnection())
 
             // workaround since dbunit complains
             if (!config.isJndiBased()) {
-            	String s = config.getDriver();
+               String s = config.getDriver()
 	            if (s.startsWith("com.mysql")) {
 	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new MySqlDataTypeFactory())
 	            } else if (s.startsWith("org.hsqldb")) {
-	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new org.dbunit.ext.hsqldb.HsqldbDataTypeFactory())
+	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new HsqldbDataTypeFactory())
 	            } else if (s.startsWith("oracle.jdbc")) {
-	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new org.dbunit.ext.oracle.OracleDataTypeFactory())
+	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new OracleDataTypeFactory())
 	            } else if (s.startsWith("org.postgresql")) {
-	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new org.dbunit.ext.postgresql.PostgresqlDataTypeFactory())
+	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new PostgresqlDataTypeFactory())
 	            } else if (s.startsWith("org.h2")) {
-	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new org.dbunit.ext.h2.H2DataTypeFactory())
+	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new H2DataTypeFactory())
 	            } else {
-	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new org.dbunit.dataset.datatype.DefaultDataTypeFactory())
+	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new DefaultDataTypeFactory())
 	            }
             }
 
@@ -249,10 +237,8 @@ public class DbUnitOperatorImpl {
 
     /**
      * Do appropriate DB unit operation.
-     *
-     * @throws Exception
      */
-    private def innerOperate() throws Exception {
+    private void innerOperate() {
 
         if (this.initialData == null) {
             log.warn "No initial data file has been set, so DB unit operator quits here."
@@ -270,16 +256,13 @@ public class DbUnitOperatorImpl {
 
             def sets = createDataSets()
             sets.each { set ->
-                if (config.getOrderTables())
+                if (config.getOrderTables()) {
                     getOperation().execute(conn, new FilteredDataSet(new DatabaseSequenceFilter(conn), set))
-                else
+                }
+                else {
                     getOperation().execute(conn, set)
+                }
             }
-
-        } catch (Exception e) {
-
-            throw new Exception(e.getMessage(), e)
-
         } finally {
             try {
                 conn.close()
@@ -293,28 +276,30 @@ public class DbUnitOperatorImpl {
      * Create flat or structured XML data-sets.
      *
      * @return data sets
-     * @throws Exception
      */
-    private def List createDataSets() throws Exception {
+    private List createDataSets() {
 
         def sets = []
 
         // create unique root path!
         def realPath
-        if (context != null)
-        	realPath = context.getServletContext().getRealPath('.')
-        else
-        	realPath = '.'
-        	
+        if (context != null) {
+           realPath = context.getServletContext().getRealPath('.')
+        }
+        else {
+           realPath = '.'
+        }
+
         def path = new File(realPath)
         def rootPath = path.getPath()
-        if (rootPath.endsWith('.'))
+        if (rootPath.endsWith('.')) {
             rootPath = rootPath.substring(0, rootPath.length() - 1)
+        }
 
         // log root path
         log.debug "ROOT-PATH: '" + rootPath + "'."
 
-        InputSource is = null
+        InputSource is
 
         this.initialData.split(',').each { currInitData ->
 
@@ -326,10 +311,12 @@ public class DbUnitOperatorImpl {
             }
 
             try {
-                if (new File(currInitData).isAbsolute() || context == null)
+                if (new File(currInitData).isAbsolute() || context == null) {
                     is = new InputSource(new FileInputStream(currInitData))
-                else
+                }
+                else {
                     is = new InputSource(new FileInputStream(rootPath + File.separator + currInitData))
+                }
             } catch (IOException ioex) {
                 log.warn "Data file '$currInitData' doesn't exist or isn't readable!", ioex
             }
@@ -339,15 +326,15 @@ public class DbUnitOperatorImpl {
                 sets.add(new FlatXmlDataSet(producer))
             } else if (dbunitXmlType.equals("structured")) {
                 sets.add(new XmlDataSet(is))
-            } else
+            } else {
                 throw new IllegalArgumentException(
                         "Value `"
                                 + this.dbunitXmlType
                                 + "` for property `dbunitXmlType` is not allowed or property is missing! Valid values are `flat` or `structured`.")
+            }
         }
 
         return sets
-
     }
 
     /**
@@ -355,36 +342,25 @@ public class DbUnitOperatorImpl {
      *
      * @return database operation
      */
-    private def DatabaseOperation getOperation() {
-
-        if ("UPDATE".equals(this.operationType))
-            return DatabaseOperation.UPDATE
-        else if ("INSERT".equals(this.operationType))
-            return DatabaseOperation.INSERT
-        else if ("REFRESH".equals(this.operationType))
-            return DatabaseOperation.REFRESH
-        else if ("DELETE".equals(this.operationType))
-            return DatabaseOperation.DELETE
-        else if ("DELETE_ALL".equals(this.operationType))
-            return DatabaseOperation.DELETE_ALL
-        else if ("CLEAN_INSERT".equals(this.operationType))
-            return DatabaseOperation.CLEAN_INSERT
-        else if ("NONE".equals(this.operationType))
-            return DatabaseOperation.NONE
-        else if ("MSSQL_CLEAN_INSERT".equals(this.operationType))
-            return InsertIdentityOperation.CLEAN_INSERT
-        else if ("MSSQL_INSERT".equals(this.operationType))
-            return InsertIdentityOperation.INSERT
-        else if ("MSSQL_REFRESH".equals(this.operationType))
-            return InsertIdentityOperation.REFRESH
-        else if ("TRUNCATE_TABLE".equals(this.operationType))
-            return InsertIdentityOperation.TRUNCATE_TABLE
-        else
-            throw new IllegalArgumentException(
+    private DatabaseOperation getOperation() {
+        switch (operationType) {
+            case "UPDATE": return DatabaseOperation.UPDATE
+            case "INSERT": return DatabaseOperation.INSERT
+            case "REFRESH": return DatabaseOperation.REFRESH
+            case "DELETE":  return DatabaseOperation.DELETE
+            case "DELETE_ALL": return DatabaseOperation.DELETE_ALL
+            case "CLEAN_INSERT": return DatabaseOperation.CLEAN_INSERT
+            case "NONE": return DatabaseOperation.NONE
+            case "MSSQL_CLEAN_INSERT": return InsertIdentityOperation.CLEAN_INSERT
+            case "MSSQL_INSERT": return InsertIdentityOperation.INSERT
+            case "MSSQL_REFRESH": return InsertIdentityOperation.REFRESH
+            case "TRUNCATE_TABLE": return InsertIdentityOperation.TRUNCATE_TABLE
+            default:
+               throw new IllegalArgumentException(
                     "Type must be one of: UPDATE, INSERT, "
                             + "REFRESH, DELETE, DELETE_ALL, CLEAN_INSERT, MSSQL_INSERT, TRUNCATE_TABLE, "
                             + "or MSSQL_REFRESH but was: "
                             + this.operationType)
+        }
     }
-
 }

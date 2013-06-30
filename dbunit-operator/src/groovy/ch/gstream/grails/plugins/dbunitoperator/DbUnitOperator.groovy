@@ -14,29 +14,25 @@
  *   limitations under the License.
  */
 
- 
- 
-package ch.gstream.grails.plugins.dbunitoperator;
+package ch.gstream.grails.plugins.dbunitoperator
 
+import ch.gstream.grails.plugins.dbunitoperator.DbUnitOperatorImpl
 
-import ch.gstream.grails.plugins.dbunitoperator.DbUnitOperatorImpl;
-
- 
 /**
  * DB-Unit Operator.
  *
  * Initial data creator for Grails application (See BootStrap.groovy). It uses
  * DBUnit and reads the data file (parameter: initialData) and the DBUnit
  * operation (parameter: initialOperation) from the DataSource.groovy.
- * 
+ *
  * The data will be initially created within the database by using the
  * configured operation (parameter: initialOperation). The initial data creator
  * should be used in BootStrap.groovy and it reads the parameter values
  * according to the Grails environment currently used.
- * 
+ *
  * XML data files can be 'flat' or 'structured' (parameter: dbunitXmlType). For
  * definition See http://dbunit.sourceforge.net/components.html.
- *  
+ *
  * @author Michael Gasche
  */
 class DbUnitOperator {
@@ -44,28 +40,28 @@ class DbUnitOperator {
 	/**
 	 * Create initial data based on configuration (DBUnit-operation, initial data,
 	 * DBUnit dataset file format) within 'DataSource.groovy'.
-	 * 
+	 *
 	 * Usually will be called by 'BootStrap.groovy'.
-	 */ 
-    static create() { 
-		
+	 */
+    static create() {
+
     	def op = new DbUnitOperatorImpl()    	op.create()
     }
 	/**
 	 * Operate data based on configuration (initial data, DBUnit dataset file format)
 	 * within 'DataSource.groovy' and given DBUnit-operation 'operationType' specified.
-	 * 
+	 *
 	 * @param operationType DBUnit-opration type (String, e.g. "CLEAN_INSERT").
-	 */ 
-    static operate(operationType) {     	def op = new DbUnitOperatorImpl()    	op.operate (operationType)    }	/**
+	 */
+    static operate(operationType) {    	def op = new DbUnitOperatorImpl()    	op.operate (operationType)    }	/**
 	 * Operate data based on configuration (DBUnit dataset file format) within
 	 * 'DataSource.groovy' and given dataset file 'filePath' and DBUnit-operation
 	 * 'operationType' specified.
-	 * 
+	 *
 	 * @param filePath DBUnit dataset file (Flat XML or structured XML, based on
 	 *        the configuration). Root-path is '[Grails-Project]/web-app/'.
 	 * @param operationType DBUnit-opration type (String, e.g. "CLEAN_INSERT").
-	 */ 
+	 */
     static operate(operationType, filePath) {
 
 		def op = new DbUnitOperatorImpl()    	op.operate (operationType, filePath)    }
