@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DBUnit flat XML file -->
+
+<!-- Real INIT data -->
+
+<dataset>
+
+	<!-- customers -->
+	<customer
+		id="1"
+		name="Omega"
+		version="1"
+	/>
+	<customer
+		id="2"
+		name="Apple"
+		version="1"
+	/>
+	<customer
+		id="3"
+		name="Saab"
+		version="1"
+	/>
+	<customer
+		id="4"
+		name="G-Stream Technologies GmbH"
+		version="1"
+	/>
+	
+</dataset>

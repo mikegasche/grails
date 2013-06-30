@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DBUnit flat XML file -->
+<dataset>
+	
+	<!-- projects -->
+	<project
+		id="2"
+		name="Mac OS X 2010"
+		version="1"
+		customer_id="2"
+	/>
+	
+</dataset>

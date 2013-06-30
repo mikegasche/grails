@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DBUnit flat XML file -->
+<dataset>
+	
+	<!-- customers -->
+	<customer
+		id="1"
+		name="Initial customer"
+		version="1"
+	/>
+	
+	<!-- projects -->
+	<project
+		id="11"
+		name="Initial project"
+		version="1"
+		customer_id="1"
+	/>
+	
+</dataset>

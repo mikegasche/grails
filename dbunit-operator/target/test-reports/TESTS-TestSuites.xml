@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="Mikes-MacBook-Pro.local" id="0" name="DummyTests" package="" tests="1" time="0.243" timestamp="2013-06-30T18:27:26">
+      <properties />
+
+      <testcase classname="DummyTests" name="testDummySomething" time="0.231" />
+
+      <system-out><![CDATA[--Output from testDummySomething--
+[Project New Markets, Mac OS X 2010]
+[Omega, Apple, Saab]
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testDummySomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="Mikes-MacBook-Pro.local" id="1" name="MyTests" package="" tests="3" time="0.125" timestamp="2013-06-30T18:27:26">
+      <properties />
+
+      <testcase classname="MyTests" name="testFirstRelation" time="0.061" />
+
+      <testcase classname="MyTests" name="testSecondRelation" time="0.028" />
+
+      <testcase classname="MyTests" name="testPrintData" time="0.031" />
+
+      <system-out><![CDATA[--Output from testFirstRelation--
+--Output from testSecondRelation--
+--Output from testPrintData--
+[Omega, Apple, Saab]
+[Project New Markets, Mac OS X 2010]
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testFirstRelation--
+--Output from testSecondRelation--
+--Output from testPrintData--
+]]></system-err>
+
+  </testsuite>
+</testsuites>

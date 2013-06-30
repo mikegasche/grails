@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DBUnit flat XML file -->
+
+<!-- Real INIT data -->
+
+<dataset>
+
+	<!-- projects -->
+	<project
+		id="1"
+		name="G-Stream Lionfish"
+		version="1"
+		customer_id="4"
+	/>
+	
+</dataset>

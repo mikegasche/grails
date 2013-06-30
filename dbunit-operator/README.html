@@ -1,0 +1,161 @@
+h2. Introduction
+The Dbunit-Operator integrates effortless and appropriate within DataSources configuration and helps to create initial data within database through *BootStrap.groovy* with help of [DbUnit|http://dbunit.sourceforge.net/]. Different DbUnit dataset files (Flat or Structured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments.
+Furthermore, the DbUnit-Operator provides a simple test case *DbUnitTestCase* (derived from GroovyTestCase) to create jUnit/DbUnit-Integration-Tests with separate test dataset files.
+
+h2. jUnit/DbUnit Testing
+To create DbUnit test cases create a groovy class named '<name-of-tests>Tests.groovy' in the *test/integration* directory and derive it from the groovy class *DbUnitTestCase* or execute the following plugin script:
+{code}
+grails create-dbunit-test
+{code}
+or
+{code}
+grails create-dbunit-test <name-of-tests>
+{code}
+
+Once created, you have to provide (overwrite) one method:
+{code}
+public getDatasets() {
+    ["data/test/data0.xml", "data/test/data1.xml"]
+}
+{code}
+The array contains DbUnit datasets (flat or structured XML) that will be inserted within database before executing one jUnit test specified within the test class. After executing one test (one jUnit test-method) the datasets will be removed from the database. The root path for the datasets within test cases is the project's root path. In most cases one dataset is enough for a test.
+The default DbUnit operations - when executing a test with one dataset - are:
+ * Before executing the test: *CLEAN_INSERT*
+ * Before executing the test: *DELETE_ALL*
+You can change this behaviour by overwrite the following methods:
+{code}
+// executed before test
+protected getDbUnitOperationType() {
+    "CLEAN_INSERT"
+}
+{code}
+and
+{code}
+// executed after test
+protected getDbUnitCleanupOperationType() {
+    "DELETE_ALL"
+}
+{code}
+When specifying more than one dataset, the operations work differently, you cannot overwrite this behaviour completely anymore and an inner mechanism takes place:
+ * Operation specified by the method *getDbUnitOperationType()* will be executed for the first dataset.
+ * Operation *INSERT* will be executed for every other following dataset.
+ * Test is executed.
+ * Operation specified by the method *getDbUnitCleanupOperationType()* will be executed for every dataset.
+To run a jUnit/DbUnit-Test, use the standard grails command for running tests:
+{code}
+grails test-app
+{code}
+Because it's a normal integration test, it will run with all other unit and integration tests and hence, the test environment data-source is specified within *DataSource.groovy* is used.
+
+h2. Creating initial data
+The DbUnit-Operator provides a very easy way to setup initial data. To do so, some additional attributes should be specified within *DataSource.groovy*:
+{code}
+dataSource {
+    pooled = true
+    driverClassName = "org.hsqldb.jdbcDriver"
+    username = "sa"
+    password = ""
+    dbunitXmlType = "flat" // dbunit-operator data file type: 'flat' or 'structured'
+    orderTables = false // resolve table dependencies and order tables? (if true: dbunit-operator is slower)
+	jndiName = null
+}
+    
+hibernate {
+    ....
+}
+    
+// environment specific settings
+environments {
+    development {
+        dataSource {
+            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+            url = "jdbc:hsqldb:mem:devDb"
+            initialData = "data/dev/data-a.xml, data/dev/data-a.xml" // 1-n dbunit-operator Flat-XML or XML data files
+            initialOperation = "CLEAN_INSERT" // dbunit-operator operation
+        }
+    }
+    test {
+        ....
+    }
+}
+{code}
+DbUnit-Operator-specific attributes explained:
+ * *orderTables*: Global attribute: order tables using dependency information provided by database meta data. See [DbUnit database sequence filter class structures|http://www.dbunit.org/apidocs/org/dbunit/database/DatabaseSequenceFilter.html].
+ * *dbunitXmlType*: Global attribute: defines the XML structure of your initial dataset: 'flat' or 'structured'. See [DbUnit data structures|http://dbunit.sourceforge.net/components.html] for definition of these XML structures.
+ * *initialData*: Can be specified for every environment. Initial dataset inserted into database.
+ * *initialOperation*: Can be specified for every environment. Initial DbUnit operation executed for the initial dataset.
+ * *jndiName*: JNDI data source if needed; if not needed value must be set to *null*.
+The values will be used to create the initial data within database in the corresponding environment. To do so, call the DbUnit-Operator within *BootStrap.groovy*:
+{code}
+class BootStrap {
+
+    def init = { servletContext ->
+    
+    	// is also executed when running tests -> provide empty or dummy initial data file within the project's root path
+        DbUnitOperator.create()
+          
+        // Create other data without DbUnit-Operator here, if you wish...
+    }
+    
+    def destroy = {
+    }
+}
+{code}
+*NOTE*: The DbUnit-Operation specified in the *DataSource.groovy* should correspond with *dbCreate* attribute specified. Otherwise, undesired results will occur.
+
+
+
+There are also other ways to use the DbUnit-Operator:
+* Calling *DbUnitOperator.operate(operationType)*: The DbUnit-Operation that should be used can be specified explicitly.
+* Calling *DbUnitOperator.operate(filePath,operationType)*: The file (dataset) and DbUnit-Operation that should be used can be specified explicitly.
+
+h2. Which paths for dbunit data files?
+* When running the grails application: <project-root>/web-app/. Used during the startup of the grails application, typically when initial data should be stored through the BootStrap: DbUnitOperator.create().   
+* When running the dbunit test cases: <project-root>/web-app/. Used when running 'grails test-app'.  
+* When defining absolute path: absolute path is used.
+ 
+h2. Scripts included with DbUnit-Operator
+* *create-dbunit-test*: creates a DbUnit test case in the *test/integration* directory.
+
+h2. Example Files
+When downloading the whole plugin structure from [SVN-Repository|http://svn.codehaus.org/grails-plugins/grails-dbunit-operator/trunk/], additional example files will be available.
+* <pluginDir>/grails-app/conf/BootStrap.groovy: Contains example call.
+* <pluginDir>/grails-app/conf/DataSource.groovy: Contains example configuration.
+* <pluginDir>/grails-app/domain/Customer.groovy: Test domain class.
+* <pluginDir>/grails-app/domain/Project.groovy: Test domain class.
+* <pluginDir>/test/integration/MyTests.groovy: Example test using test domain classes and dataset *data/test/data0.xml* and *data/test/data1.xml*.
+* <pluginDir>/web-app/data/test/data0.xml: Example test dataset used by *MyTests.groovy (jUnit/DbUnit-integration test)*.
+* <pluginDir>/web-app/data/test/data1.xml: Example test dataset used by *MyTests.groovy (jUnit/DbUnit-integration test)*.
+* <pluginDir>/web-app/data/init/data-a.xml: Example initial dataset used by *BootStrap.groovy*.
+* <pluginDir>/web-app/data/init/data-b.xml: Example initial dataset used by *BootStrap.groovy*.
+
+h2. Example Project
+Access to an example project using the DbUnit-Operator 1.7:
+* [http://www.g-stream.ch/grails/examples/dbunit-operator-test.zip]
+
+h2. Changes
+h3. Release 1.7
+* Consolidation of changes. Upgrade to Grails 2.2.3 / DBUnit 2.4.9
+h3. Release 1.6.2
+* Adding support for TRUNCATE_TABLE dbunit operation (by Lucas F. A. Teixeira)
+h3. Release 1.6 / 1.6.1
+* Support for JNDI based datasources and bugfixes (by Gert Wohlgemuth)
+h3. Release 1.5
+* Functionality of release 1.4 but with possibility to resolve table dependencies and order tables with *orderTables* configuration attribute. See [DbUnit database sequence filter class structures|http://www.dbunit.org/apidocs/org/dbunit/database/DatabaseSequenceFilter.html].
+h3. Release 1.4
+* Re-integration of Gert Wolgemuth's changes after package refactoring: replacement of implementation details to make sure data are imported in the right order (using org.dbunit.database.DatabaseSequenceFilter)
+* Always use the servlet context real path as base for relative defined data files; root path --> *web-app/*
+h3. Release 1.3
+Changes made by request of Lucas Frare Teixeira:
+* Test domain classes from the plugin package excluded, so the corresponding test tables aren't created
+* DbUnit-Operator classes have be put into package *ch.gstream.grails.plugins.dbunitoperator*
+* More than one data files can be defined within initialData section (*DataSource.groovy*)
+h3. Release 1.2
+* InsertIdentityOperation has been imported, so DB operations with the MS SQL server are possible (MSSQL_INSERT, etc.)
+* The handling of paths for dbunit data files has been made easier. Defining absolute paths within *DataSource.groovy* (Property 'initialData') is now possible. See also chapter *Which paths and contexts are used for dbunit data files?* above.
+
+h2. References
+* [DbUnit homepage|http://dbunit.sourceforge.net/]
+
+h2. Contact and Author
+*Author*: Michael Gasche @ [g-stream.ch|http://www.g-stream.ch], grails (at) g-stream (full-stop) ch
