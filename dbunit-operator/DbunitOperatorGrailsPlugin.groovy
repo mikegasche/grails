@@ -31,4 +31,10 @@ Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (d
 '''
 
 	def documentation = "http://grails.org/dbunit-operator"
+
+	def license = "APACHE"
+	def issueManagement = [system: 'GitHub', url: 'https://github.com/mikegasche/grails/issues']
+	def scm = [url: 'https://github.com/mikegasche/grails/tree/master/dbunit-operator']
+//	def organization = [name: "My Company", url: "http://www.my-company.com/"]
+//	def developers = [[name: "Joe Bloggs", email: "joe@bloggs.net"]]
 }
