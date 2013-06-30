@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Mikes-MacBook-Pro.local" name="DummyTests" tests="1" time="0.218" timestamp="2013-06-30T21:37:14">
+<testsuite errors="0" failures="0" hostname="Mikes-MacBook-Pro.local" name="DummyTests" tests="1" time="0.211" timestamp="2013-06-30T22:33:46">
   <properties />
-  <testcase classname="DummyTests" name="testDummySomething" time="0.206" />
+  <testcase classname="DummyTests" name="testDummySomething" time="0.199" />
   <system-out><![CDATA[--Output from testDummySomething--
 [Project New Markets, Mac OS X 2010]
 [Omega, Apple, Saab]

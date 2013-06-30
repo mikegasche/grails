@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd'>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.grails.plugins</groupId>
+  <artifactId>dbunit-operator</artifactId>
+  <packaging>zip</packaging>
+  <version>1.7</version>
+  <name>DBUnit Operator</name>
+  <description>The dbunit-operator integrates effortless and appropriate within data-source configuration and helps to create initial data within database through BootStrap.groovy with help of DbUnit. Different DbUnit dataset files (Flat or Strcutured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments (See DataSource.groovy).
+Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (derived from GroovyTestCase) to create jUnit/DbUnit-Tests with seperate test dataset files (See MyTest.groovy).
+</description>
+  <url>http://grails.org/DbunitOperator+Plugin</url>
+  <developers>
+    <developer>
+      <name>Michael Gasche</name>
+      <email>grails (at) g-stream (full-stop) ch</email>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.10</version>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xmlParserAPIs</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xerces</groupId>
+          <artifactId>xmlParserAPIs</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+</project>

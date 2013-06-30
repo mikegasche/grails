@@ -9,8 +9,6 @@ Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (d
   <type>DbunitOperatorGrailsPlugin</type>
   <resources>
     <resource>spring.resources</resource>
-    <resource>Customer</resource>
-    <resource>Project</resource>
   </resources>
   <repositories>
     <repository name='grailsCentral' url='http://grails.org/plugins' />

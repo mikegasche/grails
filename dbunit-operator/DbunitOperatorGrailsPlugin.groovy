@@ -24,8 +24,8 @@ class DbunitOperatorGrailsPlugin {
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
             "grails-app/views/error.gsp",
-            "grails-app/domain/TestDoCustomer.groovy",
-            "grails-app/domain/TestDoProject.groovy",
+            "grails-app/domain/Customer.groovy",
+            "grails-app/domain/Project.groovy",
             "grails-app/conf/BootStrap.groovy",
             "grails-app/conf/BuildConfig.groovy",
             "grails-app/conf/Config.groovy",
