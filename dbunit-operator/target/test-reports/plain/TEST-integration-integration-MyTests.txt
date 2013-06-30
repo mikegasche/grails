@@ -1,5 +1,5 @@
 Testsuite: MyTests
-Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0,111 sec
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0,108 sec
 ------------- Standard Output ---------------
 --Output from testFirstRelation--
 --Output from testSecondRelation--
@@ -13,6 +13,6 @@ Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0,111 sec
 --Output from testPrintData--
 ------------- ---------------- ---------------
 
-Testcase: testFirstRelation took 0,05 sec
-Testcase: testSecondRelation took 0,026 sec
+Testcase: testFirstRelation took 0,047 sec
+Testcase: testSecondRelation took 0,028 sec
 Testcase: testPrintData took 0,03 sec
