@@ -1,5 +1,6 @@
 dbunit-operator/.metadata
 dbunit-operator/target
+dbunit-operator/target-eclipse
 dbunit-operator/web-app
 *.DS_Store*
 *.settings*
