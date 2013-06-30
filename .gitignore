@@ -2,3 +2,4 @@ dbunit-operator/.metadata
 *.DS_Store*
 *.settings*
 *stacktrace.log*
+*.classes
