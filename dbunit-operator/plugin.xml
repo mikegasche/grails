@@ -14,6 +14,7 @@ Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (d
   </resources>
   <repositories>
     <repository name='grailsCentral' url='http://grails.org/plugins' />
+    <repository name='http://grails.org/plugins' url='http://grails.org/plugins' />
     <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
   </repositories>
   <dependencies>

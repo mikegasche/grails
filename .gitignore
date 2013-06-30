@@ -1,4 +1,7 @@
 dbunit-operator/.metadata
+dbunit-operator/target/test-classes
+dbunit-operator/target/classes
+dbunit-operator/web-app/WEB-INF/classes
 *.DS_Store*
 *.settings*
 *stacktrace.log*
