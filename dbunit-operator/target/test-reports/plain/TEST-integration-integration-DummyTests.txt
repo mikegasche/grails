@@ -1,5 +1,5 @@
 Testsuite: DummyTests
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0,569 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0,252 sec
 ------------- Standard Output ---------------
 --Output from testDummySomething--
 [Project New Markets, Mac OS X 2010]
@@ -9,4 +9,4 @@ Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0,569 sec
 --Output from testDummySomething--
 ------------- ---------------- ---------------
 
-Testcase: testDummySomething took 0,556 sec
+Testcase: testDummySomething took 0,239 sec
