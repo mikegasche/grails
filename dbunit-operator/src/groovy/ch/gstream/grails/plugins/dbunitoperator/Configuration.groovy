@@ -84,7 +84,7 @@ class Configuration {
         this.orderTables = false
         Object o = config.getProperty(KEY_ORDER_TABLES)
         if (o != null) {
-            this.orderTables = Boolean.valueof(config.getProperty(KEY_ORDER_TABLES).toString())
+            this.orderTables = Boolean.getBoolean(config.getProperty(KEY_ORDER_TABLES).toString())
         }
 
         log.debug "ORDER TABLES = " + this.orderTables
