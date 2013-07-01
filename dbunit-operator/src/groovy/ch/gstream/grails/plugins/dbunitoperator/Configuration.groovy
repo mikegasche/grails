@@ -14,14 +14,10 @@
  *   limitations under the License.
  */
 
+package ch.gstream.grails.plugins.dbunitoperator
 
-
-package ch.gstream.grails.plugins.dbunitoperator;
-
-
-import groovy.util.ConfigObject;
-import org.codehaus.groovy.grails.commons.ApplicationHolder;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.LogFactory
+import org.codehaus.groovy.grails.commons.ApplicationHolder
 
 /**
  * <p>
@@ -33,43 +29,42 @@ import org.apache.commons.logging.LogFactory;
  */
 class Configuration {
 
-    def log = LogFactory.getLog(Configuration.class);
+    def log = LogFactory.getLog(getClass())
 
     /**
      * DBUnit XML type: flat
      */
-    public static final String XML_TYPE_FLAT = "flat";
+    public static final String XML_TYPE_FLAT = "flat"
     /**
      * DBUnit XML type: structured
      */
-    public static final String XML_TYPE_STRUCTURED = "structured";
+    public static final String XML_TYPE_STRUCTURED = "structured"
 
-    private static final String KEY_DATASOURCE = "dataSource";
-    private static final String KEY_INITIAL_DATA = "initialData";
-    private static final String KEY_INITIAL_OPERATION = "initialOperation";
-    private static final String KEY_XML_TYPE = "dbunitXmlType";
-    private static final String KEY_ORDER_TABLES = "orderTables";
+    private static final String KEY_DATASOURCE = "dataSource"
+    private static final String KEY_INITIAL_DATA = "initialData"
+    private static final String KEY_INITIAL_OPERATION = "initialOperation"
+    private static final String KEY_XML_TYPE = "dbunitXmlType"
+    private static final String KEY_ORDER_TABLES = "orderTables"
 
-    private ConfigObject config = null;
+    private ConfigObject config
 
-    private String initialData = null;
-    private String operationType = null;
-    private String dbunitXmlType = null;
-    private boolean orderTables = false;
+    private String initialData
+    private String operationType
+    private String dbunitXmlType
+    private boolean orderTables = false
 
-    private String url = null;
-    private String username = null;
-    private String password = null;
-    private String driver = null;
+    private String url
+    private String username
+    private String password
+    private String driver
 
-    private String jndiName = null
-    
+    private String jndiName
+
     /**
      * Constructor loading configuration parameters from DataSource.groovy.
      */
-    public Configuration() {
-        this((ConfigObject) ApplicationHolder.getApplication().getConfig().get(
-                KEY_DATASOURCE));
+    Configuration() {
+        this((ConfigObject) ApplicationHolder.getApplication().getConfig().get(KEY_DATASOURCE))
     }
 
     /**
@@ -78,25 +73,26 @@ class Configuration {
      * @param config
      *            configuration object
      */
-    public Configuration(ConfigObject config) {
+    Configuration(ConfigObject config) {
 
-        this.config = config;
+        this.config = config
 
-        this.dbunitXmlType = config.getProperty(KEY_XML_TYPE).toString();
-        this.initialData = config.getProperty(KEY_INITIAL_DATA).toString();
-        this.operationType = config.getProperty(KEY_INITIAL_OPERATION).toString();
+        this.dbunitXmlType = config.getProperty(KEY_XML_TYPE)
+        this.initialData = config.getProperty(KEY_INITIAL_DATA)
+        this.operationType = config.getProperty(KEY_INITIAL_OPERATION)
 
-        this.orderTables = false;
+        this.orderTables = false
         Object o = config.getProperty(KEY_ORDER_TABLES)
-        if (o != null)
-            this.orderTables = new Boolean(config.getProperty(KEY_ORDER_TABLES).toString()).booleanValue();
+        if (o != null) {
+            this.orderTables = Boolean.valueof(config.getProperty(KEY_ORDER_TABLES).toString())
+        }
 
-        log.debug "ORDER TABLES = " + this.orderTables;
+        log.debug "ORDER TABLES = " + this.orderTables
 
-        this.url = config.getProperty("url").toString();
-        this.username = config.getProperty("username").toString();
-        this.password = config.getProperty("password").toString();
-        this.driver = config.getProperty("driverClassName").toString();
+        this.url = config.getProperty("url")
+        this.username = config.getProperty("username")
+        this.password = config.getProperty("password")
+        this.driver = config.getProperty("driverClassName")
         this.jndiName = config.getProperty("jndiName")
     }
 
@@ -105,8 +101,8 @@ class Configuration {
      *
      * @return data source
      */
-    public ConfigObject getDataSource() {
-        return this.config;
+    ConfigObject getDataSource() {
+        return this.config
     }
 
     /**
@@ -114,8 +110,8 @@ class Configuration {
      *
      * @return initial data
      */
-    public String getInitialData() {
-        return this.initialData;
+    String getInitialData() {
+        return this.initialData
     }
 
     /**
@@ -123,8 +119,8 @@ class Configuration {
      *
      * @return initial operation
      */
-    public String getInitialOperation() {
-        return this.operationType;
+    String getInitialOperation() {
+        return this.operationType
     }
 
     /**
@@ -132,8 +128,8 @@ class Configuration {
      *
      * @return dbunit operation type
      */
-    public String getDbUnitXmlType() {
-        return this.dbunitXmlType;
+    String getDbUnitXmlType() {
+        return this.dbunitXmlType
     }
 
     /**
@@ -141,8 +137,8 @@ class Configuration {
      *
      * @return db url
      */
-    public String getUrl() {
-        return url;
+    String getUrl() {
+        return url
     }
 
     /**
@@ -150,8 +146,8 @@ class Configuration {
      *
      * @return db user name
      */
-    public String getUsername() {
-        return username;
+    String getUsername() {
+        return username
     }
 
     /**
@@ -159,8 +155,8 @@ class Configuration {
      *
      * @return db password
      */
-    public String getPassword() {
-        return password;
+    String getPassword() {
+        return password
     }
 
     /**
@@ -168,8 +164,8 @@ class Configuration {
      *
      * @return db driver class name
      */
-    public String getDriver() {
-        return driver;
+    String getDriver() {
+        return driver
     }
 
     /**
@@ -179,8 +175,8 @@ class Configuration {
      *         should be resolved and tables be ordered,
      *         otherwise <code>false</code>
      */
-    public boolean getOrderTables() {
-        return orderTables;
+    boolean getOrderTables() {
+        return orderTables
     }
 
     /**
@@ -188,28 +184,25 @@ class Configuration {
      * @return  <code>true</code> if config is JNDI based,
      *         otherwise <code>false</code>
      */
-    public isJndiBased() {
-    	 
+    boolean isJndiBased() {
+
     	if (jndiName == null) {
     		return false
     	}
-    	else if (jndiName.length() == 0) {
+    	if (jndiName.length() == 0) {
     		return false
     	}
-    	else if(jndiName.equals("{}")) {
+    	if(jndiName.equals("{}")) {
     		return false
     	}
-    	else {
-    		return true
-    	}
+    	return true
 	}
 
     /**
      * Return JNDI name.
      * @return JNDI name
      */
-    public String getJndiName() {
+    String getJndiName() {
         return this.jndiName
     }
-
 }

@@ -1,3 +1,0 @@
---Output from testFirstRelation--
---Output from testSecondRelation--
---Output from testPrintData--
