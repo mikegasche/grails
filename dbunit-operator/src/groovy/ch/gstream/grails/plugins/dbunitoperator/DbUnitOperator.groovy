@@ -45,15 +45,28 @@ class DbUnitOperator {
 	 */
     static create() {
 
-    	def op = new DbUnitOperatorImpl()    	op.create()
+    	def op = new DbUnitOperatorImpl()
+    	op.create()
     }
-	/**
+    
+     static create(ServletContext servletContext) { 
+		
+    	def op = new DbUnitOperatorImpl(new Configuration(), servletContext)
+    	op.create()
+    }	
+
+	/**
 	 * Operate data based on configuration (initial data, DBUnit dataset file format)
 	 * within 'DataSource.groovy' and given DBUnit-operation 'operationType' specified.
 	 *
 	 * @param operationType DBUnit-opration type (String, e.g. "CLEAN_INSERT").
 	 */
-    static operate(operationType) {    	def op = new DbUnitOperatorImpl()    	op.operate (operationType)    }	/**
+    static operate(operationType) {
+    	def op = new DbUnitOperatorImpl()
+    	op.operate (operationType)
+    }
+
+	/**
 	 * Operate data based on configuration (DBUnit dataset file format) within
 	 * 'DataSource.groovy' and given dataset file 'filePath' and DBUnit-operation
 	 * 'operationType' specified.
@@ -64,5 +77,7 @@ class DbUnitOperator {
 	 */
     static operate(operationType, filePath) {
 
-		def op = new DbUnitOperatorImpl()    	op.operate (operationType, filePath)    }
+		def op = new DbUnitOperatorImpl()
+    	op.operate (operationType, filePath)
+    }
 }
