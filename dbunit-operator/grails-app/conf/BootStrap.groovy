@@ -8,15 +8,23 @@ class BootStrap {
 	  	// DataSource.groovy (dbunitXmlType, initialData, initialOperation)
 	  	DbUnitOperator.create()
 
+    	// OR:
+    	// create a dbunit-operator with given servlet context in a real
+	  	// environment othe than test/integration
+	  	//DbUnitOperator.create(servletContext)
+	  	
+	  	
 	  	// dbunit-operator example: use other operation type
-	  	//DbUnitOperator.create("UPDATE")
+	  	//DbUnitOperator.operate("UPDATE")
 
 	  	// dbunit-operator example: use other operation type and data file
-	  	//DbUnitOperator.create("INSERT", "data/test/data.xml")
+	  	//DbUnitOperator.operate("INSERT", "data/test/data.xml")
 
 	  	// Here, still other data can be created within database, the grails
 	  	// 'dbCreate'-property only should correspond to the dbunit-operator
 	  	// property 'initialOperation' for reasonable results
 	  	// ...
+	  	
     }
+    
 }

@@ -16,6 +16,8 @@
 
 package ch.gstream.grails.plugins.dbunitoperator
 
+import javax.servlet.ServletContext;
+
 import ch.gstream.grails.plugins.dbunitoperator.DbUnitOperatorImpl
 
 /**
@@ -49,7 +51,15 @@ class DbUnitOperator {
     	op.create()
     }
     
-     static create(ServletContext servletContext) { 
+	/**
+	 * Create initial data based on configuration (DBUnit-operation, initial data,
+	 * DBUnit dataset file format) within 'DataSource.groovy'.
+	 *
+	 * Usually will be called by 'BootStrap.groovy'.
+	 *
+	 * @param servletContext the servlet context to inject in a real environment other than test/integration
+	 */
+    static create(ServletContext servletContext) { 
 		
     	def op = new DbUnitOperatorImpl(new Configuration(), servletContext)
     	op.create()
@@ -59,7 +69,7 @@ class DbUnitOperator {
 	 * Operate data based on configuration (initial data, DBUnit dataset file format)
 	 * within 'DataSource.groovy' and given DBUnit-operation 'operationType' specified.
 	 *
-	 * @param operationType DBUnit-opration type (String, e.g. "CLEAN_INSERT").
+	 * @param operationType DBUnit-operation type (String, e.g. "CLEAN_INSERT").
 	 */
     static operate(operationType) {
     	def op = new DbUnitOperatorImpl()
@@ -71,13 +81,27 @@ class DbUnitOperator {
 	 * 'DataSource.groovy' and given dataset file 'filePath' and DBUnit-operation
 	 * 'operationType' specified.
 	 *
+	 * @param operationType DBUnit-operation type (String, e.g. "CLEAN_INSERT").
 	 * @param filePath DBUnit dataset file (Flat XML or structured XML, based on
 	 *        the configuration). Root-path is '[Grails-Project]/web-app/'.
-	 * @param operationType DBUnit-opration type (String, e.g. "CLEAN_INSERT").
 	 */
-    static operate(operationType, filePath) {
+    static operate(operationType, String filePath) {
 
 		def op = new DbUnitOperatorImpl()
     	op.operate (operationType, filePath)
     }
+    
+	/**
+	 * Operate data based on configuration (initial data, DBUnit dataset file format)
+	 * within 'DataSource.groovy' and given DBUnit-operation 'operationType' specified.
+	 *
+	 * @param operationType DBUnit-operation type (String, e.g. "CLEAN_INSERT").
+	 * @param servletContext the servlet context to inject in a real environment other than test/integration
+	 */
+    static operate(operationType, servletContext) {
+    	
+    	def op = new DbUnitOperatorImpl(new Configuration(), servletContext)
+    	op.create(operationType)
+    }
+    
 }
