@@ -15,7 +15,7 @@
  */
 class DbunitOperatorGrailsPlugin {
 
-	def version = "1.7"
+	def version = "1.7.1"
 	def grailsVersion = "2.0.0 > *"
 	def pluginExcludes = [
 		"grails-app/domain/**",
@@ -37,4 +37,5 @@ Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (d
 	def scm = [url: 'https://github.com/mikegasche/grails/tree/master/dbunit-operator']
 //	def organization = [name: "My Company", url: "http://www.my-company.com/"]
 //	def developers = [[name: "Joe Bloggs", email: "joe@bloggs.net"]]
+			
 }

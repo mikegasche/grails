@@ -16,9 +16,10 @@
 
 package ch.gstream.grails.plugins.dbunitoperator
 
-import javax.servlet.ServletContext;
+import org.springframework.web.context.WebApplicationContext
 
 import ch.gstream.grails.plugins.dbunitoperator.DbUnitOperatorImpl
+
 
 /**
  * DB-Unit Operator.
@@ -57,11 +58,12 @@ class DbUnitOperator {
 	 *
 	 * Usually will be called by 'BootStrap.groovy'.
 	 *
-	 * @param servletContext the servlet context to inject in a real environment other than test/integration
+	 * @param webApplicationContext the web application context to inject in a real
+	 *        environment other than test/integration
 	 */
-    static create(ServletContext servletContext) { 
+    static create(webApplicationContext) { 
 		
-    	def op = new DbUnitOperatorImpl(new Configuration(), servletContext)
+    	def op = new DbUnitOperatorImpl(new Configuration(), webApplicationContext)
     	op.create()
     }	
 
@@ -96,11 +98,12 @@ class DbUnitOperator {
 	 * within 'DataSource.groovy' and given DBUnit-operation 'operationType' specified.
 	 *
 	 * @param operationType DBUnit-operation type (String, e.g. "CLEAN_INSERT").
-	 * @param servletContext the servlet context to inject in a real environment other than test/integration
+	 * @param webApplicationContext the web application context to inject in a real
+	 *        environment other than test/integration
 	 */
-    static operate(operationType, servletContext) {
+    static operate(operationType, webApplicationContext) {
     	
-    	def op = new DbUnitOperatorImpl(new Configuration(), servletContext)
+    	def op = new DbUnitOperatorImpl(new Configuration(), webApplicationContext)
     	op.create(operationType)
     }
     
