@@ -11,7 +11,7 @@ class BootStrap {
     	// OR:
     	// create a dbunit-operator with given web application context in a
 	  	// real environment othe than test/integration
-	  	// e.g.:
+	  	// e.g.: 
         //   ServletContext sctx = ServletContextHolder.getServletContext()
         //   WebApplicationContext webApplicationContext =
 	  	//   WebApplicationContextUtils.getWebApplicationContext(sctx)	  	

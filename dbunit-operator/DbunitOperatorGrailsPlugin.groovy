@@ -37,5 +37,5 @@ Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (d
 	def scm = [url: 'https://github.com/mikegasche/grails/tree/master/dbunit-operator']
 //	def organization = [name: "My Company", url: "http://www.my-company.com/"]
 //	def developers = [[name: "Joe Bloggs", email: "joe@bloggs.net"]]
-			
+
 }

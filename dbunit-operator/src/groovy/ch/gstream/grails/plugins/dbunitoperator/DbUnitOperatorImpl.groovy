@@ -50,7 +50,7 @@ import org.xml.sax.InputSource
  * <p>
  * DB-Unit Operator implementation. See 'DbUnitOperator.groovy' for further usage.
  * </p>
- *
+ * 
  * Which paths and contexts are used for dbunit data files?
  *
  * - When running the grails application:

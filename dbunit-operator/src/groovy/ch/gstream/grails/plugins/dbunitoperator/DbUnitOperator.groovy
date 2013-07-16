@@ -23,7 +23,7 @@ import ch.gstream.grails.plugins.dbunitoperator.DbUnitOperatorImpl
 
 /**
  * DB-Unit Operator.
- *
+ * 
  * Initial data creator for Grails application (See BootStrap.groovy). It uses
  * DBUnit and reads the data file (parameter: initialData) and the DBUnit
  * operation (parameter: initialOperation) from the DataSource.groovy.
