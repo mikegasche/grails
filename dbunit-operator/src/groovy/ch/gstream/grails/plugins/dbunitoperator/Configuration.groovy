@@ -46,6 +46,7 @@ class Configuration {
     private static final String KEY_INITIAL_OPERATION = "initialOperation"
     private static final String KEY_XML_TYPE = "dbunitXmlType"
     private static final String KEY_ORDER_TABLES = "orderTables"
+	private static final String KEY_QUALIFIED_TABLE_NAMES = "qualified_table_names"
 
     private ConfigObject config
 
@@ -53,6 +54,7 @@ class Configuration {
     private String operationType
     private String dbunitXmlType
     private boolean orderTables = false
+	private boolean qualifiedTableNames = false
 
     private String url
     private String username
@@ -87,6 +89,12 @@ class Configuration {
         if (o != null) {
             this.orderTables = Boolean.getBoolean(config.getProperty(KEY_ORDER_TABLES).toString())
         }
+		
+		this.qualifiedTableNames = false
+		Object oqtn = config.getProperty(KEY_QUALIFIED_TABLE_NAMES)
+		if (oqtn != null) {
+			this.qualifiedTableNames = Boolean.getBoolean(config.getProperty(KEY_QUALIFIED_TABLE_NAMES).toString())
+		}
 
         log.debug "ORDER TABLES = " + this.orderTables
 
@@ -206,4 +214,12 @@ class Configuration {
     String getJndiName() {
         return this.jndiName
     }
+	
+	/**
+	 * Return Qualified Table Name name.
+	 * @return Qualified Table Name name
+	 */
+	String getQualifiedTableNames() {
+		return this.qualifiedTableNames
+	}
 }

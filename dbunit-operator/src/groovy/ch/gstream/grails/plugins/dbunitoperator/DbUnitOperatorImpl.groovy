@@ -219,7 +219,7 @@ class DbUnitOperatorImpl {
 
             conn = new DatabaseConnection(sql.getConnection())
 
-            // workaround since dbunit complains
+			// workaround since dbunit complains
             if (!config.isJndiBased()) {
                String s = config.getDriver()
 	            if (s.startsWith("com.mysql")) {
@@ -235,6 +235,12 @@ class DbUnitOperatorImpl {
 	            } else {
 	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new DefaultDataTypeFactory())
 	            }
+				
+				if(config.getQualifiedTableNames())
+				{
+					conn.getConfig().setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES,true)
+				}
+				
             }
 
         } catch (Exception e) {
