@@ -18,7 +18,7 @@ public getDatasets() {
     ["data/test/data0.xml", "data/test/data1.xml"]
 }
 {code}
-The array contains DbUnit datasets (flat or structured XML) that will be inserted within database before executing one jUnit test specified within the test class. After executing one test (one jUnit test-method) the datasets will be removed from the database. The root path for the datasets within test cases is the project's root path. In most cases one dataset is enough for a test.
+The array contains DbUnit datasets (flat or structured XML) that will be inserted within database before executing one jUnit test specified within the test class. After executing one test (one jUnit test-method) the datasets will be removed from the database. In most cases one dataset is enough for a test.
 The default DbUnit operations - when executing a test with one dataset - are:
  * Before executing the test: *CLEAN_INSERT*
  * Before executing the test: *DELETE_ALL*
@@ -86,7 +86,7 @@ class BootStrap {
 
     def init = { servletContext ->
 
-    	// is also executed when running tests -> provide empty or dummy initial data file within the project's root path
+    	// is also executed when running tests -> provide empty or dummy initial data file
         DbUnitOperator.create()
 
         // Create other data without DbUnit-Operator here, if you wish...

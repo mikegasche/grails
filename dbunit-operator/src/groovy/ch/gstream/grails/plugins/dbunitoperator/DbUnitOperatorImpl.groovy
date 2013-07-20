@@ -126,6 +126,16 @@ class DbUnitOperatorImpl {
     }
 
     /**
+     * Execute given operation.
+     */
+    void operate(String operationType) {
+
+        this.operationType = operationType
+
+        this.innerOperate()
+    }
+
+    /**
      * Execute given operation with configured data file (DataSource.groovy).
      */
     void operate(String operationType, String filePath) {

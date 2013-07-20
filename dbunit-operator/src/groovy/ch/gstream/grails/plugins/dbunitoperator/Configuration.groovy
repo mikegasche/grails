@@ -16,8 +16,9 @@
 
 package ch.gstream.grails.plugins.dbunitoperator
 
+import grails.util.Holders
 import org.apache.commons.logging.LogFactory
-import org.codehaus.groovy.grails.commons.ApplicationHolder
+
 
 /**
  * <p>
@@ -58,13 +59,13 @@ class Configuration {
     private String password
     private String driver
 
-    private String jndiName
+    private String jndiName = null
 
     /**
      * Constructor loading configuration parameters from DataSource.groovy.
      */
     Configuration() {
-        this((ConfigObject) ApplicationHolder.getApplication().getConfig().get(KEY_DATASOURCE))
+        this((ConfigObject) Holders.config.get(KEY_DATASOURCE))
     }
 
     /**
