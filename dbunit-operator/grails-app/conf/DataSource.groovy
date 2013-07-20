@@ -3,6 +3,7 @@ dataSource {
 	driverClassName = "org.h2.Driver"
 	username = "sa"
 	password = ""
+	dbCreate = "update"
 	dbunitXmlType = "flat" // dbunit-operator data file type: 'flat' or 'structured'
 	orderTables = false // resolve table dependencies and order tables? (if true: dbunit-operator is slower)
 	jndiName = null

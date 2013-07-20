@@ -46,7 +46,7 @@ class Configuration {
     private static final String KEY_INITIAL_OPERATION = "initialOperation"
     private static final String KEY_XML_TYPE = "dbunitXmlType"
     private static final String KEY_ORDER_TABLES = "orderTables"
-	private static final String KEY_QUALIFIED_TABLE_NAMES = "qualified_table_names"
+	private static final String KEY_QUALIFIED_TABLE_NAMES = "qualifiedTableNames"
 
     private ConfigObject config
 
@@ -216,10 +216,11 @@ class Configuration {
     }
 	
 	/**
-	 * Return Qualified Table Name name.
-	 * @return Qualified Table Name name
+	 * Return <code>true</true> when qualified table names should be used, otherwise <code>false</code>
+	 * @return <code>true</true> when qualified table names should be used, otherwise <code>false</code>
 	 */
-	String getQualifiedTableNames() {
+	boolean getQualifiedTableNames() {
 		return this.qualifiedTableNames
 	}
+	
 }

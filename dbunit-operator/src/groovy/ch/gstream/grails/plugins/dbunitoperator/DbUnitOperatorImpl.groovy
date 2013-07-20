@@ -236,9 +236,8 @@ class DbUnitOperatorImpl {
 	                conn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new DefaultDataTypeFactory())
 	            }
 				
-				if(config.getQualifiedTableNames())
-				{
-					conn.getConfig().setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES,true)
+				if (config.getQualifiedTableNames()) {
+					conn.getConfig().setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true)
 				}
 				
             }
@@ -380,4 +379,5 @@ class DbUnitOperatorImpl {
                             + this.operationType)
         }
     }
+    
 }
