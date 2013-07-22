@@ -93,7 +93,7 @@ class Configuration {
 		this.qualifiedTableNames = false
 		Object oqtn = config.getProperty(KEY_QUALIFIED_TABLE_NAMES)
 		if (oqtn != null) {
-			this.qualifiedTableNames = Boolean.getBoolean(config.getProperty(KEY_QUALIFIED_TABLE_NAMES).toString())
+			this.qualifiedTableNames = config.getProperty(KEY_QUALIFIED_TABLE_NAMES)
 		}
 
         log.debug "ORDER TABLES = " + this.orderTables
