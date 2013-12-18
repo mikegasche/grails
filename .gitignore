@@ -1,10 +1,13 @@
-dbunit-operator/.metadata
-dbunit-operator/target
-dbunit-operator/target-eclipse
-dbunit-operator/web-app
+.metadata
+target
+target-eclipse
+web-app
 *.DS_Store*
 *.settings*
 *stacktrace.log*
 *.class
 plugin.xml
 *.zip
+#idea files
+.idea
+*.iml

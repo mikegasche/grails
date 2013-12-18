@@ -30,7 +30,7 @@ Integrates effortless and appropriate within data-source configuration and helps
 Furthermore, the dbunit-operator provides a simple test case 'DbUnitTestCase' (derived from GroovyTestCase) to create jUnit/DbUnit-Tests with seperate test dataset files (See MyTest.groovy).
 '''
 
-	def documentation = "http://grails.org/dbunit-operator"
+	def documentation = "http://grails.org/plugin/dbunit-operator"
 
 	def license = "APACHE"
 	def issueManagement = [system: 'GitHub', url: 'https://github.com/mikegasche/grails/issues']
