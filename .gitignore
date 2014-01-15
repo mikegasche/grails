@@ -6,6 +6,7 @@ dbunit-operator/web-app
 *.project*
 *.DS_Store*
 *.settings*
+*.link_to_grails_plugins*
 *stacktrace.log*
 *.class
 plugin.xml
