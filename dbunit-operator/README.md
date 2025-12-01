@@ -3,7 +3,7 @@
 > ⚠️ **Note:** This repository is out-of-date, as Grails is now considered old technology.  
 > For fast, lightweight, and modern Java web development, check out [autumo BeetRoot](https://github.com/autumoswitzerland/autumo-beetroot).
 
-The Dbunit-Operator integrates effortless and appropriate within DataSources configuration and helps to create initial data within database through *BootStrap.groovy* with help of [DbUnit|http://dbunit.sourceforge.net/]. Different DbUnit dataset files (Flat or Structured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments.
+The Dbunit-Operator integrates effortless and appropriate within DataSources configuration and helps to create initial data within database through *BootStrap.groovy* with help of DbUnit [http://dbunit.sourceforge.net/]. Different DbUnit dataset files (Flat or Structured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments.
 Furthermore, the DbUnit-Operator provides a simple test case *DbUnitTestCase* (derived from GroovyTestCase) to create jUnit/DbUnit-Integration-Tests with separate test dataset files.
 
 # jUnit/DbUnit Testing
