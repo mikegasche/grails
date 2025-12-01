@@ -3,6 +3,7 @@
 > ⚠️ **Note:** This repository is out-of-date, as Grails is now considered old technology.  
 > For fast, lightweight, and modern Java web development, check out [autumo BeetRoot](https://github.com/autumoswitzerland/autumo-beetroot).
 
+
 The Dbunit-Operator integrates effortless and appropriate within DataSources configuration and helps to create initial data within database through *BootStrap.groovy* with help of [DbUnit](http://dbunit.sourceforge.net). Different DbUnit dataset files (Flat or Structured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments.
 Furthermore, the DbUnit-Operator provides a simple test case *DbUnitTestCase* (derived from GroovyTestCase) to create jUnit/DbUnit-Integration-Tests with separate test dataset files.
 
@@ -157,7 +158,7 @@ When downloading the whole plugin structure from this Git-Repository, additional
 ##  Release 1.6 / 1.6.1
 - Support for JNDI based datasources and bugfixes (by Gert Wohlgemuth).
 ##  Release 1.5
-- Functionality of release 1.4 but with possibility to resolve table dependencies and order tables with *orderTables* configuration attribute. See [DbUnit database sequence filter class structures|http://www.dbunit.org/apidocs/org/dbunit/database/DatabaseSequenceFilter.html].
+- Functionality of release 1.4 but with possibility to resolve table dependencies and order tables with *orderTables* configuration attribute. See [DbUnit database sequence filter class structures](http://www.dbunit.org/apidocs/org/dbunit/database/DatabaseSequenceFilter.html).
 ##  Release 1.4
 - Re-integration of Gert Wolgemuth's changes after package refactoring: replacement of implementation details to make sure data are imported in the right order (using org.dbunit.database.DatabaseSequenceFilter)
 - Always use the servlet context real path as base for relative defined data files; root path --> *web-app/*
