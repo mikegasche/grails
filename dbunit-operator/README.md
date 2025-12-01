@@ -3,11 +3,13 @@
 > ⚠️ **Note:** This repository is out-of-date, as Grails is now considered old technology.  
 > For fast, lightweight, and modern Java web development, check out [autumo BeetRoot](https://github.com/autumoswitzerland/autumo-beetroot).
 
-The Dbunit-Operator integrates effortless and appropriate within DataSources configuration and helps to create initial data within database through *BootStrap.groovy* with help of DbUnit [http://dbunit.sourceforge.net/]. Different DbUnit dataset files (Flat or Structured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments.
+The Dbunit-Operator integrates effortless and appropriate within DataSources configuration and helps to create initial data within database through *BootStrap.groovy* with help of [DbUnit](http://dbunit.sourceforge.net). Different DbUnit dataset files (Flat or Structured XML) and DbUnit operations (CLEAN_INSERT, UPDATE, etc.) can be specified for different environments.
 Furthermore, the DbUnit-Operator provides a simple test case *DbUnitTestCase* (derived from GroovyTestCase) to create jUnit/DbUnit-Integration-Tests with separate test dataset files.
 
 # jUnit/DbUnit Testing
+
 To create DbUnit test cases create a groovy class named '<name-of-tests>Tests.groovy' in the *test/integration* directory and derive it from the groovy class *DbUnitTestCase* or execute the following plugin script:
+
 ```
 grails create-dbunit-test
 ```
@@ -22,6 +24,7 @@ public getDatasets() {
     ["data/test/data0.xml", "data/test/data1.xml"]
 }
 ```
+
 The array contains DbUnit datasets (flat or structured XML) that will be inserted within database before executing one jUnit test specified within the test class. After executing one test (one jUnit test-method) the datasets will be removed from the database. In most cases one dataset is enough for a test.
 The default DbUnit operations - when executing a test with one dataset - are:
     
@@ -29,6 +32,7 @@ The default DbUnit operations - when executing a test with one dataset - are:
 - Before executing the test: *DELETE_ALL*
     
 You can change this behaviour by overwrite the following methods:
+
 ```
 // executed before test
 protected getDbUnitOperationType() {
@@ -51,12 +55,15 @@ When specifying more than one dataset, the operations work differently, you cann
 - Operation specified by the method *getDbUnitCleanupOperationType()* will be executed for every dataset.
     
 To run a jUnit/DbUnit-Test, use the standard grails command for running tests:
+
 ```
 grails test-app
 ```
+
 Because it's a normal integration test, it will run with all other unit and integration tests and hence, the test environment data-source is specified within *DataSource.groovy* is used.
 
 # Creating initial data
+
 The DbUnit-Operator provides a very easy way to setup initial data. To do so, some additional attributes should be specified within *DataSource.groovy*:
     
 ```
@@ -87,8 +94,8 @@ environments {
     
 DbUnit-Operator-specific attributes explained:
     
-- *orderTables*: Global attribute: order tables using dependency information provided by database meta data. See [DbUnit database sequence filter class structures|http://www.dbunit.org/apidocs/org/dbunit/database/DatabaseSequenceFilter.html].
-- *dbunitXmlType*: Global attribute: defines the XML structure of your initial dataset: 'flat' or 'structured'. See [DbUnit data structures|http://dbunit.sourceforge.net/components.html] for definition of these XML structures.
+- *orderTables*: Global attribute: order tables using dependency information provided by database meta data. See [DbUnit database sequence filter class structures](http://www.dbunit.org/apidocs/org/dbunit/database/DatabaseSequenceFilter.html).
+- *dbunitXmlType*: Global attribute: defines the XML structure of your initial dataset: 'flat' or 'structured'. See [DbUnit data structures](https://dbunit.sourceforge.net/dbunit/datatypes.html) for definition of these XML structures.
 - *initialData*: Can be specified for every environment. Initial dataset inserted into database.
 - *initialOperation*: Can be specified for every environment. Initial DbUnit operation executed for the initial dataset.
 - *jndiName*: JNDI data source if needed; if not needed value must be set to *null*.
@@ -113,13 +120,13 @@ class BootStrap {
     
 *NOTE*: The DbUnit-Operation specified in the *DataSource.groovy* should correspond with *dbCreate* attribute specified. Otherwise, undesired results will occur.
 
-
 There are also other ways to use the DbUnit-Operator:
     
 - Calling *DbUnitOperator.operate(operationType)*: The DbUnit-Operation that should be used can be specified explicitly.
 - Calling *DbUnitOperator.operate(filePath,operationType)*: The file (dataset) and DbUnit-Operation that should be used can be specified explicitly.
 
 # Which paths for dbunit data files?
+
 * When running the grails application: <project-root>/web-app/. Used during the startup of the grails application, typically when initial data should be stored through the BootStrap: DbUnitOperator.create().
 * When running the dbunit test cases: <project-root>/web-app/. Used when running 'grails test-app'.
 * When defining absolute path: absolute path is used.
@@ -129,7 +136,7 @@ There are also other ways to use the DbUnit-Operator:
 - *create-dbunit-test*: creates a DbUnit test case in the *test/integration* directory.
 
 # Example Files
-When downloading the whole plugin structure from [Git-Repository|https://github.com/mikegasche/grails/tree/master/dbunit-operator], additional example files will be available.
+When downloading the whole plugin structure from this Git-Repository, additional example files will be available.
 - <pluginDir>/grails-app/conf/BootStrap.groovy: Contains example call.
 - <pluginDir>/grails-app/conf/DataSource.groovy: Contains example configuration.
 - <pluginDir>/grails-app/domain/Customer.groovy: Test domain class.
@@ -164,5 +171,5 @@ Changes made by request of Lucas Frare Teixeira:
 - The handling of paths for dbunit data files has been made easier. Defining absolute paths within *DataSource.groovy* (Property 'initialData') is now possible. See also chapter *Which paths and contexts are used for dbunit data files?* above.
 
 # References
-- [DbUnit homepage|http://dbunit.sourceforge.net/]
+- [DbUnit homepage](http://dbunit.sourceforge.net)
 
